@@ -2,6 +2,8 @@
 #include <assert.h>
 #include "heap.h"
 
+#define TRACE
+
 int cmp(void *a, void *b) {
 	int *aa = a, *bb = b;
 	return (*aa - *bb);
@@ -24,6 +26,7 @@ int heap_check(int *data, size_t len) {
 }
 
 void arr_print(int *arr, size_t len) {
+#ifdef TRACE
 	if (len == 0) {
 		printf("{}");
 	}
@@ -34,12 +37,18 @@ void arr_print(int *arr, size_t len) {
 	}
 	printf("%d }", arr[len - 1]);
 	printf("\n");
+#else
+	(void)arr;
+	(void)len;
+#endif // TRACE
 }
 
 void test_build_heap(void) {
 	int heap[] = {-10, 3, 30, 100, 9, -11, 43, 3, -1};
 	size_t len = sizeof(heap) / sizeof(heap[0]);
+	arr_print(heap, len);
 	build_heap(heap, len, cmp, sizeof(int));
+	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 	printf("Passed %s...\n", __func__);
 }
