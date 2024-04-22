@@ -7,10 +7,9 @@ typedef int (*cmp_t) (void *a, void *b);
 void heapify_up(void *data, size_t index, const cmp_t cmp, const size_t unit_size) {
 	uint8_t *bytes = data;
 	while (index > 0) {
-		size_t parent_index = index / 2;
-		void *p_data = bytes + (unit_size * parent_index);
-		void *c_data = bytes + (unit_size * index);
-		// NOTE: Max heap semantics by default
+		size_t parent_index = (index - 1)/ 2;
+		void *p_data = (uint8_t *)data + (unit_size * parent_index);
+		void *c_data = (uint8_t *)data + (unit_size * index);
 		if (cmp(p_data, c_data) < 0) {
 			uint8_t temp[unit_size];
 			memcpy(temp, p_data, unit_size);
