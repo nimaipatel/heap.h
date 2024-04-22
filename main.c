@@ -5,11 +5,10 @@
 #define TRACE
 
 int cmp(void *a, void *b) {
-	int *aa = a, *bb = b;
-	return (*aa - *bb);
+	return (*(int *)a - *(int *)b);
 }
 
-int heap_check(int *data, size_t len) {
+int heap_check(const int *data, size_t len) {
 	for (size_t i = 0; i < len; i += 1) {
 		size_t left = i * 2 + 1;
 		size_t right = left + 1;
@@ -25,7 +24,7 @@ int heap_check(int *data, size_t len) {
 	return 1;
 }
 
-void arr_print(int *arr, size_t len) {
+void arr_print(const int *arr, size_t len) {
 #ifdef TRACE
 	if (len == 0) {
 		printf("{}");

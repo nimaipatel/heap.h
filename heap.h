@@ -72,7 +72,7 @@ void heap_update_key(void *data, size_t len, size_t index, void *new_item, cmp_t
 }
 
 void build_heap(void *data, const size_t len, const cmp_t cmp, const size_t unit_size) {
-	for (size_t i = len / 2 - 1; i + 1 > 0; i -= 1) {
+	for (size_t i = len / 2 - 1; i <= len / 2 - 1; i -= 1) {
 		heapify_down(data, len, i, cmp, unit_size);
 	}
 }
