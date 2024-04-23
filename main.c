@@ -91,10 +91,53 @@ void test_increase_key(void) {
 	printf("Passed %s...\n", __func__);
 }
 
+void test_heap_push(void) {
+	int heap[1024] = {-10, 3, 30, 100, 9, -11, 43, 3, -1};
+	size_t len = 9;
+	arr_print(heap, len);
+
+	build_heap(heap, len, cmp, sizeof(int));
+	arr_print(heap, len);
+	assert(heap_check(heap, len) == true);
+
+	heap[len++] = 90;
+	heap_push(heap, len, cmp, sizeof(int));
+	arr_print(heap, len);
+	assert(heap_check(heap, len));
+
+	printf("Passed %s...\n", __func__);
+}
+
+void test_heap_pop(void) {
+	int heap[1024] = {-10, 3, 30, 100, 9, -11, 50, 3, -1};
+	size_t len = 9;
+	arr_print(heap, len);
+
+	build_heap(heap, len, cmp, sizeof(int));
+	arr_print(heap, len);
+	assert(heap_check(heap, len) == true);
+
+	heap_pop(heap, len, cmp, sizeof(int));
+	int result = heap[--len];
+	arr_print(heap, len);
+	assert(result == 100);
+	assert(heap_check(heap, len) == true);
+
+	heap_pop(heap, len, cmp, sizeof(int));
+	result = heap[--len];
+	arr_print(heap, len);
+	assert(result == 50);
+	assert(heap_check(heap, len) == true);
+
+	printf("Passed %s...\n", __func__);
+}
+
 int main(void) {
 	test_build_heap();
 	test_decrease_key();
 	test_increase_key();
+	test_heap_push();
+	test_heap_pop();
 	printf("Passed all tests...\n");
 	return 0;
 }

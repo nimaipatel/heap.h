@@ -71,6 +71,20 @@ void heap_update_key(void *data, size_t len, size_t index, void *new_item, cmp_t
 	}
 }
 
+void heap_push(void *data, size_t len, const cmp_t cmp, size_t width) {
+	heapify_up(data, len - 1, cmp, width);
+}
+
+void heap_pop(void *data, size_t len, const cmp_t cmp, size_t width) {
+	assert(len > 0);
+	void *last = (uint8_t *)data + width * (len - 1);
+	void *first = data;
+	swap(first, last, width);
+
+	size_t new_len = len - 1;
+	heapify_down(data, new_len, 0, cmp, width);
+}
+
 void build_heap(void *data, const size_t len, const cmp_t cmp, const size_t width) {
 	for (size_t i = len / 2 - 1; i <= len / 2 - 1; i -= 1) {
 		heapify_down(data, len, i, cmp, width);
