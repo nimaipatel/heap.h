@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
+#include <stdbool.h>
 #include "heap.h"
 
 #define TRACE
@@ -8,20 +9,20 @@ int cmp(void *a, void *b) {
 	return (*(int *)a - *(int *)b);
 }
 
-int heap_check(const int *data, size_t len) {
+bool heap_check(const int *data, size_t len) {
 	for (size_t i = 0; i < len; i += 1) {
 		size_t left = i * 2 + 1;
 		size_t right = left + 1;
 		if (left < len && data[left] > data[i]) {
-			return 0;
+			return false;
 		}
 
 		if (right < len && data[right] > data[i]) {
-			return 0;
+			return false;
 		}
 	}
 
-	return 1;
+	return true;
 }
 
 void arr_print(const int *arr, size_t len) {
@@ -62,7 +63,7 @@ void test_decrease_key(void) {
 	assert(heap_check(heap, len) == true);
 
 	int new_item = -1000;
-	size_t index = 4;
+	size_t index = 2;
 	assert(new_item < heap[index]);
 	heap_update_key(heap, len, index, &new_item, cmp, sizeof(int));
 	arr_print(heap, len);
@@ -81,7 +82,7 @@ void test_increase_key(void) {
 	assert(heap_check(heap, len) == true);
 
 	int new_item = 69;
-	size_t index = 4;
+	size_t index = 8;
 	assert(new_item > heap[index]);
 	heap_update_key(heap, len, index, &new_item, cmp, sizeof(int));
 	arr_print(heap, len);
