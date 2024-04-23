@@ -4,7 +4,7 @@
 
 #define TRACE
 
-int cmp(void *a, void *b) {
+int cmp_int(void *a, void *b) {
 	return (*(int *)a - *(int *)b);
 }
 
@@ -46,7 +46,7 @@ void test_heap_build(void) {
 	int heap[] = {-10, 3, 30, 100, 9, -11, 43, 3, -1};
 	size_t len = sizeof(heap) / sizeof(heap[0]);
 	arr_print(heap, len);
-	heap_build(heap, len, cmp, sizeof(int));
+	heap_build(heap, len, cmp_int, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 	printf("Passed %s...\n", __func__);
@@ -57,14 +57,14 @@ void test_decrease_key(void) {
 	size_t len = sizeof(heap) / sizeof(heap[0]);
 	arr_print(heap, len);
 
-	heap_build(heap, len, cmp, sizeof(int));
+	heap_build(heap, len, cmp_int, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 
 	int new_item = -1000;
 	size_t index = 2;
 	assert(new_item < heap[index]);
-	heap_update_key(heap, len, index, &new_item, cmp, sizeof(int));
+	heap_update_key(heap, len, index, &new_item, cmp_int, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 
@@ -76,14 +76,14 @@ void test_increase_key(void) {
 	size_t len = sizeof(heap) / sizeof(heap[0]);
 	arr_print(heap, len);
 
-	heap_build(heap, len, cmp, sizeof(int));
+	heap_build(heap, len, cmp_int, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 
 	int new_item = 69;
 	size_t index = 8;
 	assert(new_item > heap[index]);
-	heap_update_key(heap, len, index, &new_item, cmp, sizeof(int));
+	heap_update_key(heap, len, index, &new_item, cmp_int, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 
@@ -95,12 +95,12 @@ void test_heap_push(void) {
 	size_t len = 9;
 	arr_print(heap, len);
 
-	heap_build(heap, len, cmp, sizeof(int));
+	heap_build(heap, len, cmp_int, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 
 	heap[len++] = 90;
-	heap_push(heap, len, cmp, sizeof(int));
+	heap_push(heap, len, cmp_int, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len));
 
@@ -112,17 +112,17 @@ void test_heap_pop(void) {
 	size_t len = 9;
 	arr_print(heap, len);
 
-	heap_build(heap, len, cmp, sizeof(int));
+	heap_build(heap, len, cmp_int, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 
-	heap_pop(heap, len, cmp, sizeof(int));
+	heap_pop(heap, len, cmp_int, sizeof(int));
 	int result = heap[--len];
 	arr_print(heap, len);
 	assert(result == 100);
 	assert(heap_check(heap, len) == true);
 
-	heap_pop(heap, len, cmp, sizeof(int));
+	heap_pop(heap, len, cmp_int, sizeof(int));
 	result = heap[--len];
 	arr_print(heap, len);
 	assert(result == 50);
