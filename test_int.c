@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdbool.h>
-#include "heap.h"
 
 #define TRACE
 
@@ -43,11 +42,11 @@ void arr_print(const int *arr, size_t len) {
 #endif // TRACE
 }
 
-void test_build_heap(void) {
+void test_heap_build(void) {
 	int heap[] = {-10, 3, 30, 100, 9, -11, 43, 3, -1};
 	size_t len = sizeof(heap) / sizeof(heap[0]);
 	arr_print(heap, len);
-	build_heap(heap, len, cmp, sizeof(int));
+	heap_build(heap, len, cmp, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 	printf("Passed %s...\n", __func__);
@@ -58,7 +57,7 @@ void test_decrease_key(void) {
 	size_t len = sizeof(heap) / sizeof(heap[0]);
 	arr_print(heap, len);
 
-	build_heap(heap, len, cmp, sizeof(int));
+	heap_build(heap, len, cmp, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 
@@ -77,7 +76,7 @@ void test_increase_key(void) {
 	size_t len = sizeof(heap) / sizeof(heap[0]);
 	arr_print(heap, len);
 
-	build_heap(heap, len, cmp, sizeof(int));
+	heap_build(heap, len, cmp, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 
@@ -96,7 +95,7 @@ void test_heap_push(void) {
 	size_t len = 9;
 	arr_print(heap, len);
 
-	build_heap(heap, len, cmp, sizeof(int));
+	heap_build(heap, len, cmp, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 
@@ -113,7 +112,7 @@ void test_heap_pop(void) {
 	size_t len = 9;
 	arr_print(heap, len);
 
-	build_heap(heap, len, cmp, sizeof(int));
+	heap_build(heap, len, cmp, sizeof(int));
 	arr_print(heap, len);
 	assert(heap_check(heap, len) == true);
 
@@ -132,12 +131,11 @@ void test_heap_pop(void) {
 	printf("Passed %s...\n", __func__);
 }
 
-int main(void) {
-	test_build_heap();
+int test_int(void) {
+	test_heap_build();
 	test_decrease_key();
 	test_increase_key();
 	test_heap_push();
 	test_heap_pop();
-	printf("Passed all tests...\n");
 	return 0;
 }
